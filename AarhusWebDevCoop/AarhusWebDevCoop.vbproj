@@ -353,13 +353,8 @@
       <DependentUpon>mainStyle.css</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="Gulpfile.js" />
     <Content Include="js\bootstrap\bootstrap.bundle.min.js" />
-    <Content Include="scss\custom\build.css">
-      <DependentUpon>build.scss</DependentUpon>
-    </Content>
-    <Content Include="scss\custom\build.min.css">
-      <DependentUpon>build.css</DependentUpon>
-    </Content>
     <Content Include="Views\Partials\BlockList\Default.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap3.cshtml" />
@@ -415,13 +410,6 @@
     <Content Include="config\BackOfficeTours\getting-started.json" />
     <Content Include="js\bootstrap\bootstrap.bundle.min.js.map" />
     <Content Include="App_Data\packages\installedPackages.config" />
-    <None Include="compilerconfig.json" />
-    <Content Include="compilerconfig.json.bindings">
-      <DependentUpon>compilerconfig.json</DependentUpon>
-    </Content>
-    <None Include="compilerconfig.json.defaults">
-      <DependentUpon>compilerconfig.json</DependentUpon>
-    </None>
     <Content Include="libman.json" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -522,7 +510,10 @@
     <Content Include="scss\bootstrap\_variables.scss" />
     <Content Include="scss\bootswatch\darkly\_bootswatch.scss" />
     <Content Include="scss\bootswatch\darkly\_variables.scss" />
-    <Content Include="scss\custom\build.scss" />
+    <Content Include="scss\custom\build.scss">
+      <Generator>SassTranspiler</Generator>
+    </Content>
+    <Content Include="Views\MacroPartials\mainMenu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -533,7 +524,6 @@
   <ItemGroup>
     <Folder Include="App_Data\Models\" />
     <Folder Include="App_Data\packages\font\" />
-    <Folder Include="Views\MacroPartials\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
