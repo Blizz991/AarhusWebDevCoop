@@ -18,7 +18,7 @@
             <li class="nav-item">
                 <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="#">
                     @item.Name
-                    @(item.IsAncestorOrSelf(Model.Content) ? "<span class='visually-hidden'>(current)</span>" : null)
+                    @(item.IsAncestorOrSelf(Model.Content) ? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
                 </a>
             </li>
         }
