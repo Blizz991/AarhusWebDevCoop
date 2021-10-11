@@ -539,6 +539,7 @@
     <Content Include="Views\ProjectsOverview.cshtml" />
     <Content Include="Views\ArticleOverview.cshtml" />
     <Content Include="scss\custom\_custom.scss" />
+    <Content Include="Views\Partials\_sitemap.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
