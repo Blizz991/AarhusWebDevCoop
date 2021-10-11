@@ -514,6 +514,12 @@
       <Generator>SassTranspiler</Generator>
     </Content>
     <Content Include="Views\MacroPartials\mainMenu.cshtml" />
+    <Content Include="Views\ArticleItem.cshtml" />
+    <Content Include="Views\InfoPage.cshtml" />
+    <Content Include="Views\Overview.cshtml" />
+    <Content Include="Views\ProjectItem.cshtml" />
+    <Content Include="Views\ProjectsOverview.cshtml" />
+    <Content Include="Views\ArticleOverview.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

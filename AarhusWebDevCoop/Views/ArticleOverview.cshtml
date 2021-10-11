@@ -1,0 +1,47 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Overview>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@using Services = Umbraco.Core.Services;
+@{
+    Layout = "Master.cshtml";
+}
+
+@{
+    var articles = Umbraco.Content(Guid.Parse("ded90e4b-dc79-4ccc-b62c-3833bab41da7"))
+    .ChildrenOfType("articleItem")
+    .Where(x => x.IsVisible())
+    .OrderByDescending(x => x.CreateDate);
+}
+
+<section class="row">
+    <h2>Articles</h2>
+
+    @foreach (var article in articles)
+    {
+        <article class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary">
+                        @{
+                            foreach (var tag in article.GetProperty("tags").Value<IEnumerable<string>>())
+                            {
+                                <span class="badge rounded-pill bg-info">@tag</span>
+                            }
+                        }
+
+                    </strong>
+                    <h3 class="mb-0">@article.Name</h3>
+                    <time class="mb-1 text-muted">@article.CreateDate.ToString("dd. MMM - yyyy")</time>
+                    <p class="card-text mb-auto">
+
+                        @Html.Truncate(article.Value("main").ToString(), 50, true)
+                    </p>
+                    <a href="@article.Url()" class="stretched-link">Read the full article</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img class="card-img-bottom" src="@Url.GetCropUrl(article.Value<IPublishedContent>("articleThumbnail"), height: 250, width: 200)" alt="" />
+                </div>
+            </div>
+        </article>
+    }
+
+</section>
