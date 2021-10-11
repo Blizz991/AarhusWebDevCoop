@@ -9,7 +9,7 @@
 *@
 
 @{
-    var visibleMenuItems = Model.Content.Root().Children.Where(x => x.IsVisible()).Where(y => !(bool)y.Value("hideInNavigation")).ToArray();
+    var visibleMenuItems = Model.Content.Root().Children.Where(x => x.IsVisible()).Where(y => (y.Value("hideInNavigation") == null || !(bool)y.Value("hideInNavigation"))).ToArray();
     //var projects = Model.Content.Root().ChildrenOfType("projectItem").ToArray();
     //Children.Where(x => x.IsDocumentType("projectItem")).ToArray();
     //.Where(y => y.IsVisible()).Where(z => !(bool)z.Value("hideInNavigation"))
