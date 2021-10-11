@@ -8,12 +8,24 @@
     It also highlights the current active page/section in the navigation with the CSS class "current".
 *@
 
-@{ var selection = Model.Content.Root().Children.Where(x => x.IsVisible()).Where(y => !(bool)y.Value("hideInNavigation")).ToArray(); }
+@{
+    var visibleMenuItems = Model.Content.Root().Children.Where(x => x.IsVisible()).Where(y => !(bool)y.Value("hideInNavigation")).ToArray();
+    //var projects = Model.Content.Root().ChildrenOfType("projectItem").ToArray();
+    //Children.Where(x => x.IsDocumentType("projectItem")).ToArray();
+    //.Where(y => y.IsVisible()).Where(z => !(bool)z.Value("hideInNavigation"))
+    /*Note above the function below, I couldn't get the above to work, but for some reason this below here works :( */
+    var projects = Umbraco.Content(Guid.Parse("b435055e-eb5b-4721-a195-6190cabdc3ad"))
+                    .ChildrenOfType("projectItem")
+                    .Where(x => x.IsVisible())
+                    .Where(y => y.IsVisible())
+                    .Where(z => !(bool)z.Value("hideInNavigation"));
+}
 
-@if (selection.Length > 0)
+
+@if (visibleMenuItems.Length > 0)
 {
     <ul class="navbar-nav me-auto">
-        @foreach (var item in selection)
+        @foreach (var item in visibleMenuItems)
         {
             <li class="nav-item">
                 <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@item.Url()">
@@ -22,5 +34,24 @@
                 </a>
             </li>
         }
+        @*@if (projects.Length > 0)
+        {*@
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="projectDropDownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Projects
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="projectDropDownMenuLink">
+                    @foreach (var project in projects)
+                    {
+                        <li>
+                            <a class="dropdown-item @(project.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@project.Url()">
+                                @project.Name
+                                @(project.IsAncestorOrSelf(Model.Content) ? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        @*}*@
     </ul>
 }
