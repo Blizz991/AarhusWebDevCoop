@@ -16,7 +16,7 @@
         @foreach (var item in selection)
         {
             <li class="nav-item">
-                <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="#">
+                <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@item.Url()">
                     @item.Name
                     @(item.IsAncestorOrSelf(Model.Content) ? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
                 </a>
