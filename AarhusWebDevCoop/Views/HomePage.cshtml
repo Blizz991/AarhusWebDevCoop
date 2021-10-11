@@ -4,8 +4,9 @@
     Layout = "Master.cshtml";
 }
 
-<h1>@Model.Value("siteTitle")</h1>
-
-
-@Model.Value("mainContent")
-
+<section class="row">
+    <article class="col">
+        <h1>@Model.Value("siteTitle")</h1>
+        @Model.Value("mainContent")
+    </article>
+</section>
