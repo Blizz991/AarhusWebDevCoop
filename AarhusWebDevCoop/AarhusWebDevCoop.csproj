@@ -359,6 +359,11 @@
     <Content Include="Global.asax" />
     <Content Include="Gulpfile.js" />
     <Content Include="js\bootstrap\bootstrap.bundle.min.js" />
+    <Content Include="scss\custom\build.css">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>build.scss</DependentUpon>
+    </Content>
     <Content Include="Views\Partials\BlockList\Default.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap3.cshtml" />
@@ -516,6 +521,7 @@
     <Content Include="scss\bootswatch\darkly\_variables.scss" />
     <Content Include="scss\custom\build.scss">
       <Generator>SassTranspiler</Generator>
+      <LastGenOutput>build.css</LastGenOutput>
     </Content>
     <Content Include="Views\MacroPartials\mainMenu.cshtml" />
     <Content Include="Views\ArticleItem.cshtml" />
@@ -529,6 +535,7 @@
     <Content Include="Views\AboutUs.cshtml" />
     <Content Include="Views\SiteMap.cshtml" />
     <Content Include="Views\ContactPage.cshtml" />
+    <Content Include="Views\Partials\ContactForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -540,6 +547,7 @@
     <Folder Include="App_Data\packages\font\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ContactFormSurfaceController.cs" />
     <Compile Include="ViewModels\ContactForm.cs" />
   </ItemGroup>
   <PropertyGroup>
