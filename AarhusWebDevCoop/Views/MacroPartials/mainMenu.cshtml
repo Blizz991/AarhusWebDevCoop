@@ -13,8 +13,7 @@
     var projects = Umbraco.Content(Guid.Parse("b435055e-eb5b-4721-a195-6190cabdc3ad"))
                     .ChildrenOfType("projectItem")
                     .Where(x => x.IsVisible())
-                    .Where(y => y.IsVisible())
-                    .Where(z => !(bool)z.Value("hideInNavigation"));
+                    .Where(y => !(bool)y.Value("hideInNavigation"));
 }
 
 

@@ -526,6 +526,9 @@
     <Content Include="scss\custom\_custom.scss" />
     <Content Include="Views\Partials\_sitemap.cshtml" />
     <Content Include="Views\ThisIsATest.cshtml" />
+    <Content Include="Views\MacroPartials\listNewestCompletedProjects.cshtml" />
+    <Content Include="Views\AboutUs.cshtml" />
+    <Content Include="Views\SiteMap.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

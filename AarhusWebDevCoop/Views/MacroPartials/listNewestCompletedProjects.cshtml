@@ -1,0 +1,26 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    //I couldn't find a way to add default value to parameters in Umbraco, general suggestions said to hardcode a default.
+    //Do note that macros when added from backoffice DO ask you to fill in parameters, but someone might add it programatically.
+    int numProjects = Model.MacroParameters["numOfProjects"].ToString().IsEmpty() ? 5 : Convert.ToInt32(Model.MacroParameters["numOfProjects"]) ;
+
+    var selection = Umbraco.Content(Guid.Parse("b435055e-eb5b-4721-a195-6190cabdc3ad"))
+    .ChildrenOfType("projectItem")
+    .Where(x => x.IsVisible())
+    .Where(x => x.GetProperty("status").Value<string>() == "Completed")
+    .OrderByDescending(x => x.CreateDate)
+    .Take(numProjects);
+}
+<section class="row">
+    <article class="col">
+            <ul>
+            	@foreach (var item in selection)
+            	{
+            		<li>
+            			<a href="@item.Url()">@item.Name</a>
+            		</li>
+            	}
+            </ul>
+        </article>
+</section>

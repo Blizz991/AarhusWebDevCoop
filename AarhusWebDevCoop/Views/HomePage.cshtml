@@ -10,3 +10,5 @@
         @Model.Value("mainContent")
     </article>
 </section>
+<h3>Recently completed projects</h3>
+@Umbraco.RenderMacro("listNewestCompletedProjects", new {numOfProjects="2"})
