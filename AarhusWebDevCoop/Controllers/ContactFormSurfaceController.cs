@@ -24,7 +24,9 @@ namespace AarhusWebDevCoop.Controllers
         public ActionResult HandleFormSubmit(ContactForm model)
         {
             //Prevent attempting to send email if model state is invalid
-            if (!ModelState.IsValid) { return CurrentUmbracoPage(); }
+            if (!ModelState.IsValid) {
+                return CurrentUmbracoPage();
+            }
 
             MailAddress from = new MailAddress("admin@aarhuswebdevcoop.dk", "Admin");
             MailAddress to = new MailAddress(model.Email);
@@ -40,10 +42,11 @@ namespace AarhusWebDevCoop.Controllers
                 //I'm not putting my email, nor my password on github, sorry. ¯\_(ツ)_/¯
                 smtp.Credentials = new NetworkCredential("USERNAME", "PASSWORD");
 
-                smtp.Send(message);
+                //smtp.Send(message);
             }
 
             TempData["messageSent"] = true;
+            model = new ContactForm();
             return RedirectToCurrentUmbracoPage();
         }
     }

@@ -6,41 +6,51 @@
             new { @class = "col-lg-4 col-12" }))
     {
         @*<form class="col-lg-4 col-12">*@
-        <fieldset class="">
-            <legend>Contact us below</legend>
-            <section class="form-group row">
-                @*<label for="contactName" class="form-label mt-2">Name</label>
-                    <input type="text" class="form-control" id="contactName" name="name" placeholder="Enter name">*@
-                @Html.LabelFor(m => m.Name, new { @class = "form-label mt-2" })
-                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter name" })
-                <div class="invalid-feedback">Surely you have a name?</div>
-            </section>
-            <section class="form-group row">
-                @*<label for="contactEmail" class="form-label mt-2">Email address</label>
-                    <input type="email" class="form-control" id="contactEmail" name="email" placeholder="Enter email">*@
-                @Html.LabelFor(m => m.Email, new { @class = "form-label mt-2" })
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter email" })
-                <div class="valid-feedback">Email is valid!</div>
-                <div class="invalid-feedback">Must be a valid email and not empty</div>
-            </section>
-            <section class="form-group row">
-                @*<label for="contactSubject" class="form-label mt-2">Subject</label>
-                    <input type="text" class="form-control" id="contactSubject" name="subject" placeholder="Enter subject">*@
-                @Html.LabelFor(m => m.Subject, new { @class = "form-label mt-2" })
-                @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", placeholder = "Enter subject" })
-                <div class="invalid-feedback">Empty subjects are not allowed</div>
-            </section>
-            <section class="form-group row">
-                @*<label for="contactMessage" class="form-label mt-2">Example textarea</label>
-                    <textarea class="form-control" id="contactMessage" name="message" rows="4"></textarea>*@
-                @Html.LabelFor(m => m.Name, new { @class = "form-label mt-2" })
-                @Html.TextAreaFor(m => m.Name, new { @class = "form-control", placeholder = "Enter message", rows = "4" })
-                <div class="invalid-feedback">Message must be at least 50 characters long</div>
-            </section>
-            <button type="submit" class="btn btn-primary d-flex ms-auto mt-4">
-                <i class="bi bi-envelope pe-2"></i>Send message
-            </button>
-        </fieldset>
+    <fieldset class="">
+        <legend>Contact us below</legend>
+        <section class="form-group row">
+            @*<label for="contactName" class="form-label mt-2">Name</label>
+            <input type="text" class="form-control" id="contactName" name="name" placeholder="Enter name">*@
+            @Html.LabelFor(m => m.Name, new { @class = "form-label mt-2" })
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter name" })
+            <div class="invalid-feedback">Surely you have a name?</div>
+        </section>
+        <section class="form-group row">
+            @*<label for="contactEmail" class="form-label mt-2">Email address</label>
+            <input type="email" class="form-control" id="contactEmail" name="email" placeholder="Enter email">*@
+            @Html.LabelFor(m => m.Email, new { @class = "form-label mt-2" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter email" })
+            <div class="valid-feedback">Email is valid!</div>
+            <div class="invalid-feedback">Must be a valid email and not empty</div>
+        </section>
+        <section class="form-group row">
+            @*<label for="contactSubject" class="form-label mt-2">Subject</label>
+            <input type="text" class="form-control" id="contactSubject" name="subject" placeholder="Enter subject">*@
+            @Html.LabelFor(m => m.Subject, new { @class = "form-label mt-2" })
+            @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", placeholder = "Enter subject" })
+            <div class="invalid-feedback">Empty subjects are not allowed</div>
+        </section>
+        <section class="form-group row">
+            @*<label for="contactMessage" class="form-label mt-2">Example textarea</label>
+            <textarea class="form-control" id="contactMessage" name="message" rows="4"></textarea>*@
+            @Html.LabelFor(m => m.Message, new { @class = "form-label mt-2" })
+            @Html.TextAreaFor(m => m.Message, new { @class = "form-control", placeholder = "Enter message", rows = "4" })
+            <div class="invalid-feedback">Message must be at least 50 characters long</div>
+        </section>
+
+        @{
+            bool messageSent = TempData["messageSent"] == null ? false : true;
+        }
+
+        <button type="submit" @(messageSent ? "disabled" : "") class="btn btn-primary d-flex ms-auto mt-4 @(messageSent ? "disabled" : "")">
+            <i class="bi bi-envelope pe-2"></i>Send message
+        </button>
+        @if (messageSent)
+        {
+            <p class="text-success text-center">Message sent! We'll get in touch soon&trade;</p>
+        }
+
+    </fieldset>
     }
     @*</form>*@
 </section>
