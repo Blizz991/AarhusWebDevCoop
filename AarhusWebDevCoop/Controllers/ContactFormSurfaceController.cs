@@ -7,6 +7,9 @@ using AarhusWebDevCoop.ViewModels;
 using System.Web.Mvc;
 using System.Net.Mail;
 using System.Net;
+using Umbraco.Core;
+using Umbraco.Core.Models;
+using Umbraco.Core.Services;
 
 namespace AarhusWebDevCoop.Controllers
 {
@@ -28,6 +31,8 @@ namespace AarhusWebDevCoop.Controllers
                 return CurrentUmbracoPage();
             }
 
+            #region Setup for sending contact messages by email (SMTP)
+            /*
             MailAddress from = new MailAddress("admin@aarhuswebdevcoop.dk", "Admin");
             MailAddress to = new MailAddress(model.Email);
             MailMessage message = new MailMessage(from, to);
@@ -44,6 +49,20 @@ namespace AarhusWebDevCoop.Controllers
 
                 //smtp.Send(message);
             }
+            */
+            #endregion Setup for sending contact messages by email (SMTP)
+
+            #region Save contact message as a ContactMessage document.
+            GuidUdi currentPageUdi = new GuidUdi(CurrentPage.ContentType.ItemType.ToString(), CurrentPage.Key);
+
+            IContent msg = Services.ContentService.CreateContent(model.Subject, currentPageUdi, "contactMessage");
+            msg.SetValue("messageName", model.Name);
+            msg.SetValue("messageEmail", model.Email);
+            msg.SetValue("messageSubject", model.Subject);
+            msg.SetValue("messageContent", model.Message);
+
+            Services.ContentService.Save(msg);
+            #endregion Save contact message as a ContactMessage document.
 
             TempData["messageSent"] = true;
             model = new ContactForm();
