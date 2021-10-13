@@ -45,14 +45,20 @@
     <main class="container mt-2">
         @RenderBody()
     </main>
-    
-        <footer class="py-3 mt-4 border-top fixed-bottom navbar-dark bg-dark">
-            <section class="container d-flex flex-wrap justify-content-between align-items-center">
-                <article class="col-md-4 d-flex align-items-center">
-                    <span class="">© 2021 Aarhus Web Dev Coop</span>
-                </article>
-            </section>
-        </footer>
+
+    <footer class="py-3 mt-4 border-top fixed-bottom navbar-dark bg-dark">
+        <section class="container d-flex flex-wrap justify-content-between align-items-center">
+            <article class="col-md-4 d-flex align-items-center">
+                <span class="">© 2021 Aarhus Web Dev Coop</span>
+            </article>
+        </section>
+    </footer>
+    @* Bootstrap version 5+ doesn't use jQuery, oh well - we want it for validation ¯\_(ツ)_/¯ *@
     <script src="~/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+            integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+            crossorigin="anonymous"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>

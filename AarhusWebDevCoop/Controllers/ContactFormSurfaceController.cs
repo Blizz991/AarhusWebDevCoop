@@ -37,7 +37,7 @@ namespace AarhusWebDevCoop.Controllers
                 smtp.EnableSsl = true;
                 smtp.Host = "smtp-relay-.sendinblue.com";
                 smtp.Port = 587;
-                //I'm not putting my email, nor my password on github, sorry.
+                //I'm not putting my email, nor my password on github, sorry. ¯\_(ツ)_/¯
                 smtp.Credentials = new NetworkCredential("USERNAME", "PASSWORD");
 
                 smtp.Send(message);
