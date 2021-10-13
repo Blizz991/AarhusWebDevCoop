@@ -9,3 +9,11 @@
 .disabled {
     cursor: not-allowed;
 }
+
+.input-validation-error {
+    @extend .is-invalid;
+}
+
+.field-validation-error {
+    @extend .invalid-feedback;
+}
