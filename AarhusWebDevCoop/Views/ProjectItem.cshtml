@@ -1,9 +1,40 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.ProjectItem>
 @using ContentModels = Umbraco.Web.PublishedModels;
 @{
-	Layout = "Master.cshtml";
-}
+    Layout = "Master.cshtml";
 
-<h2>Name:@Model.Value("title")</h2>
-@Model.Value("projectDescription")
-@Model.Value("status")
+    string bgClass = "bg-";
+    switch (Model.Value("status"))
+    {
+        case "Idea":
+        case "Initiated":
+            bgClass += "info";
+            break;
+        case "Under Development":
+            bgClass += "warning";
+            break;
+        case "Completed":
+            bgClass += "success";
+            break;
+        case "Abandoned":
+            bgClass += "danger";
+            break;
+        case "On Hold":
+            bgClass += "dark";
+            break;
+        default:
+            bgClass += "primary";
+            break;
+    }
+}
+<section class="row">
+    <section class="col">
+        <article>
+            <section class="d-flex flex-wrap align-items-center">
+                <h2>@Model.Value("title")</h2>
+                <span class="badge rounded-pill mx-2 h-max-content @Html.Raw(bgClass)">@Model.Value("status")</span>
+            </section>
+            @Model.Value("projectDescription")
+        </article>
+    </section>
+</section>

@@ -1,15 +1,11 @@
 ﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
 @using Umbraco.Web
 
-
-@*
-    This snippet displays a list of links of the pages immediately under the top-most page in the content tree.
-    This is the home page for a standard website.
-    It also highlights the current active page/section in the navigation with the CSS class "current".
-*@
-
 @{
-    var visibleMenuItems = Model.Content.Root().Children.Where(x => x.IsVisible()).Where(y => (y.Value("hideInNavigation") == null || !(bool)y.Value("hideInNavigation"))).ToArray();
+    var visibleMenuItems = Model.Content.Root().Children.Where(x => x.IsVisible())
+                                                        .Where(y => (y.Value("hideInNavigation") == null || !(bool)y
+                                                        .Value("hideInNavigation")))
+                                                        .ToArray();
     //var projects = Model.Content.Root().ChildrenOfType("projectItem").ToArray();
     //Children.Where(x => x.IsDocumentType("projectItem")).ToArray();
     //.Where(y => y.IsVisible()).Where(z => !(bool)z.Value("hideInNavigation"))
@@ -30,15 +26,17 @@
             <li class="nav-item">
                 <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@item.Url()">
                     @item.Name
-                    @(item.IsAncestorOrSelf(Model.Content) ? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
+                    @(item.IsAncestorOrSelf(Model.Content)? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
                 </a>
             </li>
         }
         @if (projects != null)
         {
+            var currContentIsProject = projects.Any(x => x.IsAncestorOrSelf(Model.Content));
+
             <li class="nav-item dropdown">
                 @* TODO: Fix Projects not being set to active if sub item is active - couldn't quite figure it out (spent about 30 minutes on it, then moved on) *@
-                <a class="nav-link dropdown-toggle" href="#" id="projectDropDownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle @(currContentIsProject ? "active" : null)" href="#" id="projectDropDownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Projects
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="projectDropDownMenuLink">
