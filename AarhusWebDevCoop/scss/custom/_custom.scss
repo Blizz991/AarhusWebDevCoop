@@ -17,3 +17,9 @@
 .field-validation-error {
     @extend .invalid-feedback;
 }
+
+//Fix off by 2.5 pixels icons inside buttons
+.btn > i.bi {
+    align-self: center;
+    margin-bottom: -2.5px;
+}
