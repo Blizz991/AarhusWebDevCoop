@@ -1,4 +1,5 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using ClientDependency.Core.Mvc
 @{
     Layout = null;
 }
@@ -60,5 +61,6 @@
             crossorigin="anonymous"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @Html.RenderJsHere()
 </body>
 </html>

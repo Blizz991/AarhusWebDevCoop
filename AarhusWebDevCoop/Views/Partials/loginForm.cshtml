@@ -1,0 +1,44 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using System.Web.Mvc.Html
+@using ClientDependency.Core.Mvc
+@using Umbraco.Web
+@using Umbraco.Web.Models
+@using Umbraco.Web.Controllers
+
+
+@{
+    var loginModel = new LoginModel();
+    loginModel.RedirectUrl = HttpContext.Current.Request.Url.AbsolutePath;
+
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+    Html.RequiresJs("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js");
+    Html.RequiresJs("https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js");
+    Html.RequiresJs("https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js");
+}
+
+@using (Html.BeginUmbracoForm<UmbLoginController>("HandleLogin"))
+{
+    @Html.HiddenFor(m => loginModel.RedirectUrl)
+    <section class="row d-flex justify-content-center">
+        <fieldset>
+            <legend>Login</legend>
+            <section class="form-group row">
+                @Html.LabelFor(m => loginModel.Username, new { @class = "form-label mt-2" })
+                @Html.TextBoxFor(m => loginModel.Username, new { @class = "form-control", placeholder = "Username" })
+                @Html.ValidationMessageFor(m => loginModel.Username)
+            </section>
+            <section class="form-group row">
+
+                @Html.LabelFor(m => loginModel.Password, new { @class = "form-label mt-2" })
+                @Html.PasswordFor(m => loginModel.Password, new { @class = "form-control", placeholder = "Password" })
+                @Html.ValidationMessageFor(m => loginModel.Password)
+            </section>
+            @Html.ValidationSummary("loginModel", true)
+
+            <button type="submit" class="btn btn-primary d-flex ms-auto mt-4">
+                <i class="bi bi-box-arrow-in-right pe-2"></i>Login
+            </button>
+        </fieldset>
+    </section>
+}

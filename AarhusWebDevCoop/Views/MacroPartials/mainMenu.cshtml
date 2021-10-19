@@ -1,10 +1,11 @@
 ﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
 @using Umbraco.Web
+@using Umbraco.Web.Models
+@using Umbraco.Web.Controllers
 
 @{
     var visibleMenuItems = Model.Content.Root().Children.Where(x => x.IsVisible())
-                                                        .Where(y => (y.Value("hideInNavigation") == null || !(bool)y
-                                                        .Value("hideInNavigation")))
+                                                        .Where(y => (y.Value("hideInNavigation") == null || !(bool)y.Value("hideInNavigation")))
                                                         .ToArray();
     //var projects = Model.Content.Root().ChildrenOfType("projectItem").ToArray();
     //Children.Where(x => x.IsDocumentType("projectItem")).ToArray();
@@ -19,7 +20,7 @@
 
 @if (visibleMenuItems.Length > 0)
 {
-    <ul class="navbar-nav me-auto">
+    <ul class="navbar-nav me-auto me-auto">
         @foreach (var item in visibleMenuItems)
         {
             <li class="nav-item">
@@ -34,7 +35,6 @@
             var currContentIsProject = projects.Any(x => x.IsAncestorOrSelf(Model.Content));
 
             <li class="nav-item dropdown">
-                @* TODO: Fix Projects not being set to active if sub item is active - couldn't quite figure it out (spent about 30 minutes on it, then moved on) *@
                 <a class="nav-link dropdown-toggle @(currContentIsProject ? "active" : null)" href="#" id="projectDropDownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Projects
                 </a>
@@ -52,4 +52,25 @@
             </li>
         }
     </ul>
+    if (!Members.GetCurrentLoginStatus().IsLoggedIn)
+    {
+        <a href="/login" class="btn btn-primary d-flex ms-auto">
+            <i class="bi bi-box-arrow-in-right pe-2"></i>Login
+        </a>
+    }
+    else
+    {
+        var logoutModel = new PostRedirectModel();
+        logoutModel.RedirectUrl = "/";
+        using (Html.BeginUmbracoForm<UmbLoginStatusController>
+            ("HandleLogout", null, new { @class = "d-inline-flex" }))
+        {
+
+            <span class="me-2 align-self-center">Logged in as: @Members.GetCurrentLoginStatus().Name</span>
+            <button class="btn btn-sm btn-danger d-flex ms-auto">
+                <i class="bi bi-box-arrow-in-left pe-1"></i>Logout
+            </button>
+            @Html.HiddenFor(m => logoutModel.RedirectUrl)
+        }
+    }
 }
