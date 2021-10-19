@@ -21,7 +21,7 @@
                     ("HandleLogout", null, new { @class = "d-inline-flex" }))
                 {
                     <section class="mt-5 d-flex flex-wrap">
-                        <h3 class="me-2 d-flex flex-wrap">Already logged in as: <br /><small>@Members.GetCurrentLoginStatus().Name</small></h3>
+                        <h3 class="me-2 d-flex flex-wrap">Already logged in as: <br /><span>@Members.GetCurrentLoginStatus().Name</span></h3>
                         <button class="btn btn-danger d-flex mx-auto">
                             <i class="bi bi-box-arrow-in-left pe-1"></i>Logout
                         </button>
