@@ -65,7 +65,7 @@ namespace AarhusWebDevCoop.Controllers
             #endregion Save contact message as a ContactMessage document.
 
             TempData["messageSent"] = true;
-            model = new ContactForm();
+            //model = new ContactForm();
             return RedirectToCurrentUmbracoPage();
         }
     }
