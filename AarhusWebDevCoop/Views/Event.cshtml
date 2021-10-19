@@ -1,0 +1,41 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Event>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+    Layout = "Master.cshtml";
+}
+
+<section class="row">
+    <article class="col">
+        <h2>@Model.Value("eventTitle")</h2>
+        <section class="d-inline-flex mb-2">
+            <p class="me-2 mb-0">Event start time: <span class="badge bg-info">@Model.Value("eventStartDateTime")</span></p>
+            <p class="mb-0">Event end time: <span class="badge bg-info">@Model.Value("eventEndDateTime")</span></p>
+        </section>
+        <section>
+            <h5>Location:</h5>
+            <address>
+                @Model.Location.Value("title")
+                <br />
+                @Model.Location.Value("address")
+                <br />
+                @Model.Location.Value("zip"),
+                @Model.Location.Value("city")
+            </address>
+        </section>
+        @{
+            var speakers = Model.Value<IEnumerable<IPublishedElement>>("speakers");
+        }
+        <h5>Speakers</h5>
+        <ul>
+            @foreach (var speaker in speakers)
+            {
+                <li>
+                    @speaker.Value("firstName") @speaker.Value("lastName")
+                </li>
+            }
+        </ul>
+        <p>
+            @Model.Value("eventDescription")
+        </p>
+    </article>
+</section>

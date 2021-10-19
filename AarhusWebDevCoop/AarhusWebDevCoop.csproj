@@ -548,6 +548,8 @@
     <Content Include="Views\Partials\loginForm.cshtml" />
     <Content Include="Views\Members.cshtml" />
     <Content Include="Views\AccessDenied.cshtml" />
+    <Content Include="Views\Event.cshtml" />
+    <Content Include="Views\EventsOverview.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
