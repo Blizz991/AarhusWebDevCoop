@@ -1,8 +1,8 @@
 ﻿@inherits UmbracoViewPage<dynamic>
 @using Umbraco.Web.Templates
 @using Newtonsoft.Json.Linq
-
-<h2>HELLO WORLD</h2>
+<h3>THIS IS BOOTSTRAP5 GRID LAYOUT</h3>
+<h4>I ran out of time, and therefore haven't prettified this, but I could have (and will later).</h4>
 @if (Model != null && Model.GetType() == typeof(JObject) && Model.sections != null)
 {
     var oneColumn = ((System.Collections.ICollection)Model.sections).Count == 1;

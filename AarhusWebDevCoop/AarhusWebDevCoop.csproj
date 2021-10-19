@@ -550,6 +550,7 @@
     <Content Include="Views\AccessDenied.cshtml" />
     <Content Include="Views\Event.cshtml" />
     <Content Include="Views\EventsOverview.cshtml" />
+    <Content Include="Views\Partials\Grid\Bootstrap5.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
