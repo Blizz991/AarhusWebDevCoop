@@ -10,7 +10,7 @@
     //var projects = Model.Content.Root().ChildrenOfType("projectItem").ToArray();
     //Children.Where(x => x.IsDocumentType("projectItem")).ToArray();
     //.Where(y => y.IsVisible()).Where(z => !(bool)z.Value("hideInNavigation"))
-    /*Note above the function below, I couldn't get the above to work, but for some reason this below here works :( */
+    /*Note above the function below, I couldn't get the above to work, for some reason I could only get the code below to work */
     var projects = Umbraco.Content(Guid.Parse("b435055e-eb5b-4721-a195-6190cabdc3ad"))
                     .ChildrenOfType("projectItem")
                     .Where(x => x.IsVisible())
@@ -20,48 +20,53 @@
 
 @if (visibleMenuItems.Length > 0)
 {
-    <ul class="navbar-nav me-auto me-auto">
-        @foreach (var item in visibleMenuItems)
-        {
-            if (Umbraco.MemberHasAccess(item.Path)) { 
-                <li class="nav-item">
-                    <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@item.Url()">
-                        @item.Name
-                        @(item.IsAncestorOrSelf(Model.Content) ? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
-                    </a>
-                </li>
-            }
-        }
-        @if (projects != null)
-        {
-            //We have projects, but we need to check if the member has access to any of them
-            if (projects.Any(x => Umbraco.MemberHasAccess(x.Path)))
-            {
-                var currContentIsProject = projects.Any(x => x.IsAncestorOrSelf(Model.Content));
+<ul class="navbar-nav me-auto me-auto">
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle @(currContentIsProject ? "active" : null)" href="#" id="projectDropDownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Projects
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="projectDropDownMenuLink">
-                        @foreach (var project in projects)
-                        {
-                            //Check if member has access to the project before inserting it in the dropdown
-                            if (Umbraco.MemberHasAccess(project.Path))
-                            {
-                                <li>
-                                    <a class="dropdown-item @(project.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@project.Url()">
-                                        @project.Name
-                                        @(project.IsAncestorOrSelf(Model.Content) ? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
-                                    </a>
-                                </li>
-                            }
-                        }
-                    </ul>
-                </li>
-            }
+    @foreach (var item in visibleMenuItems)
+    {
+        @*Foreach visible menu item, IF the user has access add the list item to the unordered list*@
+        if (Umbraco.MemberHasAccess(item.Path))
+        {
+            <li class="nav-item">
+                <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@item.Url()">
+                    @item.Name
+                    @(item.IsAncestorOrSelf(Model.Content) ? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
+                </a>
+            </li>
         }
-    </ul>
+    }
+    @if (projects != null)
+    {
+        //We have projects, but we need to check if the member has access to any of them
+        if (projects.Any(x => Umbraco.MemberHasAccess(x.Path)))
+        {
+            //If the current page is a project, we highlight the project dropdown menu item (and child project)
+            var currContentIsProject = projects.Any(x => x.IsAncestorOrSelf(Model.Content));
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle @(currContentIsProject ? "active" : null)" href="#" id="projectDropDownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Projects
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="projectDropDownMenuLink">
+                    @foreach (var project in projects)
+                    {
+                        //Check if member has access to the project before inserting it in the dropdown
+                        if (Umbraco.MemberHasAccess(project.Path))
+                        {
+                            <li>
+                                <a class="dropdown-item @(project.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@project.Url()">
+                                    @project.Name
+                                    @(project.IsAncestorOrSelf(Model.Content) ? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </li>
+        }
+    }
+</ul>
+    //Check if the user is logged in
     if (!Members.GetCurrentLoginStatus().IsLoggedIn)
     {
         <a href="/login" class="btn btn-primary d-flex ms-auto">
@@ -70,6 +75,7 @@
     }
     else
     {
+        //If the user IS logged in, we show a logged in as message, and a logout button instead
         var logoutModel = new PostRedirectModel();
         logoutModel.RedirectUrl = "/";
         using (Html.BeginUmbracoForm<UmbLoginStatusController>
