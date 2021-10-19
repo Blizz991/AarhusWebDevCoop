@@ -23,12 +23,14 @@
     <ul class="navbar-nav me-auto me-auto">
         @foreach (var item in visibleMenuItems)
         {
-            <li class="nav-item">
-                <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@item.Url()">
-                    @item.Name
-                    @(item.IsAncestorOrSelf(Model.Content)? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
-                </a>
-            </li>
+            if (Umbraco.MemberHasAccess(item.Path)) { 
+                <li class="nav-item">
+                    <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@item.Url()">
+                        @item.Name
+                        @(item.IsAncestorOrSelf(Model.Content) ? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
+                    </a>
+                </li>
+            }
         }
         @if (projects != null)
         {

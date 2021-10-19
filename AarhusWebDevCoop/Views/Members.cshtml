@@ -1,0 +1,63 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Members>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@using Umbraco.Core.Services;
+@{
+    Layout = "Master.cshtml";
+}
+<section class="row">
+    <h2>Members</h2>
+</section>
+<section class="row row-cols-1 row-cols-lg-3">
+
+    @{
+        IMemberService memberService = Services.MemberService;
+        var allMembers = memberService.GetAllMembers();
+        var activeMembers = memberService.GetMembersByGroup("Active");
+        foreach (var member in activeMembers)
+        {
+            <section class="col">
+                <article class="card border-dark mb-3">
+                    <section class="row">
+                        @{
+                            //string imgUdi = member.GetValue<string>("photo");
+                            //var imgUrl = Url.GetCropUrl(member.GetValue<IPublishedContent>("photo"), height: 200, width: 150);
+                            @*@Model.GetCropUrl(propertyAlias: "photo", cropAlias: "memberPhoto", height: 200, width: 150)*@
+                            <section class="col-md-4 d-flex">
+                                @*
+                                    I tried a few things and didn't really get anything to work (left some of it above)
+                                    This isn't great, but at least it shows an image, albeit not using the crop and nor in the correct format.
+                                *@
+                                @{
+                                    var imgJson = Json.Decode(member.GetValue("photo").ToString());
+                                }
+                                <img class="img-fluid my-auto" src="@imgJson["src"]" alt="Member image" />
+                            </section>
+                        }
+                        <section class="col-md-8">
+                            <section class="card-body">
+                                <h5>@member.Name</h5>
+                                @*@member.GetValue("photo");*@
+                                <ul class="card-text list-unstyled">
+                                    <li>@member.GetValue("address")</li>
+                                    <li>@member.GetValue("zip") @member.GetValue("city")</li>
+                                    <li>@member.Email</li>
+                                    @if (member.GetValue("skills") != null)
+                                    {
+                                        string memberSkills = member.GetValue("skills").ToString();
+                                        memberSkills = memberSkills.Replace("\"", "").TrimStart("[").TrimEnd("]");
+                                        <li>
+                                            @foreach (var skill in memberSkills.Split(','))
+                                            {
+                                                <span class="badge bg-info">@skill</span>
+                                            }
+                                        </li>
+                                    }
+                                </ul>
+                            </section>
+                        </section>
+                    </section>
+                </article>
+            </section>
+        }
+    }
+</section>
