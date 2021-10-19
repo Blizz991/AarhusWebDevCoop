@@ -32,24 +32,32 @@
         }
         @if (projects != null)
         {
-            var currContentIsProject = projects.Any(x => x.IsAncestorOrSelf(Model.Content));
+            //We have projects, but we need to check if the member has access to any of them
+            if (projects.Any(x => Umbraco.MemberHasAccess(x.Path)))
+            {
+                var currContentIsProject = projects.Any(x => x.IsAncestorOrSelf(Model.Content));
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle @(currContentIsProject ? "active" : null)" href="#" id="projectDropDownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Projects
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="projectDropDownMenuLink">
-                    @foreach (var project in projects)
-                    {
-                        <li>
-                            <a class="dropdown-item @(project.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@project.Url()">
-                                @project.Name
-                                @(project.IsAncestorOrSelf(Model.Content) ? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
-                            </a>
-                        </li>
-                    }
-                </ul>
-            </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle @(currContentIsProject ? "active" : null)" href="#" id="projectDropDownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Projects
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="projectDropDownMenuLink">
+                        @foreach (var project in projects)
+                        {
+                            //Check if member has access to the project before inserting it in the dropdown
+                            if (Umbraco.MemberHasAccess(project.Path))
+                            {
+                                <li>
+                                    <a class="dropdown-item @(project.IsAncestorOrSelf(Model.Content) ? "active" : null)" href="@project.Url()">
+                                        @project.Name
+                                        @(project.IsAncestorOrSelf(Model.Content) ? Html.Raw("<span class='visually-hidden'>(current)</span>") : null)
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+            }
         }
     </ul>
     if (!Members.GetCurrentLoginStatus().IsLoggedIn)
